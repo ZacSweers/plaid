@@ -36,7 +36,6 @@ interface HomeComponent : BaseComponent<HomeActivity> {
 
         fun build(): HomeComponent
         fun coreComponent(module: CoreComponent): Builder
-        fun dataManagerModule(module: DataManagerModule): Builder
         fun dataLoadedModule(module: OnDataLoadedModule): Builder
         fun filterAdapterModule(module: FilterAdapterModule): Builder
         fun sharedPreferencesModule(module: SharedPreferencesModule): Builder

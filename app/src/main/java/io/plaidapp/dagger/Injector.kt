@@ -18,7 +18,6 @@
 
 package io.plaidapp.dagger
 
-import io.plaidapp.core.dagger.DataManagerModule
 import io.plaidapp.core.dagger.FilterAdapterModule
 import io.plaidapp.core.dagger.OnDataLoadedModule
 import io.plaidapp.core.dagger.SharedPreferencesModule
@@ -37,7 +36,6 @@ fun inject(
 ) {
     DaggerHomeComponent.builder()
         .coreComponent(PlaidApplication.coreComponent(activity))
-        .dataManagerModule(DataManagerModule())
         .dataLoadedModule(OnDataLoadedModule(dataLoadedCallback))
         .filterAdapterModule(FilterAdapterModule(activity))
         .homeModule(HomeModule(activity))

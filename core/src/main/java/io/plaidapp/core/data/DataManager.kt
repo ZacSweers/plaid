@@ -26,12 +26,13 @@ import io.plaidapp.core.producthunt.data.api.provideProductHuntRepository
 import io.plaidapp.core.ui.FilterAdapter
 import retrofit2.Call
 import java.util.HashMap
+import javax.inject.Inject
 
 /**
  * Responsible for loading data from the various sources. Instantiating classes are responsible for
  * providing the [onDataLoaded] function to do something with the data.
  */
-class DataManager(
+class DataManager @Inject constructor(
         onDataLoadedCallback: BaseDataManager.OnDataLoadedCallback<List<PlaidItem>>,
         private val loadStoriesUseCase: LoadStoriesUseCase,
         private val searchStoriesUseCase: SearchStoriesUseCase,

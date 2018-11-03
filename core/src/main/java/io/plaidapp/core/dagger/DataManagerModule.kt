@@ -16,75 +16,20 @@
 
 package io.plaidapp.core.dagger
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import io.plaidapp.core.dagger.designernews.DesignerNewsDataModule
 import io.plaidapp.core.dagger.dribbble.DribbbleDataModule
-import io.plaidapp.core.data.BaseDataManager
 import io.plaidapp.core.data.DataLoadingSubject
 import io.plaidapp.core.data.DataManager
-import io.plaidapp.core.data.PlaidItem
-import io.plaidapp.core.designernews.domain.LoadStoriesUseCase
-import io.plaidapp.core.designernews.domain.SearchStoriesUseCase
-import io.plaidapp.core.dribbble.data.ShotsRepository
-import io.plaidapp.core.ui.FilterAdapter
 
 /**
  * Module to provide [DataManager].
  */
 @Module(includes = [DribbbleDataModule::class, DesignerNewsDataModule::class])
-class DataManagerModule {
+abstract class DataManagerModule {
 
-    private lateinit var manager: DataManager
+    @Binds
+    abstract fun provideDataLoadingSubject(dataManager: DataManager): DataLoadingSubject
 
-    @Provides
-    fun provideDataManager(
-        onDataLoadedCallback: BaseDataManager.OnDataLoadedCallback<List<PlaidItem>>,
-        loadStoriesUseCase: LoadStoriesUseCase,
-        searchStoriesUseCase: SearchStoriesUseCase,
-        shotsRepository: ShotsRepository,
-        filterAdapter: FilterAdapter
-    ): DataManager = getDataManager(
-        onDataLoadedCallback,
-        loadStoriesUseCase,
-        searchStoriesUseCase,
-        shotsRepository,
-        filterAdapter
-    )
-
-    @Provides
-    fun provideDataLoadingSubject(
-        onDataLoadedCallback: BaseDataManager.OnDataLoadedCallback<List<PlaidItem>>,
-        loadStoriesUseCase: LoadStoriesUseCase,
-        searchStoriesUseCase: SearchStoriesUseCase,
-        shotsRepository: ShotsRepository,
-        filterAdapter: FilterAdapter
-    ): DataLoadingSubject = getDataManager(
-        onDataLoadedCallback,
-        loadStoriesUseCase,
-        searchStoriesUseCase,
-        shotsRepository,
-        filterAdapter
-    )
-
-    private fun getDataManager(
-        onDataLoadedCallback: BaseDataManager.OnDataLoadedCallback<List<PlaidItem>>,
-        loadStoriesUseCase: LoadStoriesUseCase,
-        searchStoriesUseCase: SearchStoriesUseCase,
-        shotsRepository: ShotsRepository,
-        filterAdapter: FilterAdapter
-    ): DataManager {
-        return if (::manager.isInitialized) {
-            manager
-        } else {
-            manager = DataManager(
-                onDataLoadedCallback,
-                loadStoriesUseCase,
-                searchStoriesUseCase,
-                shotsRepository,
-                filterAdapter
-            )
-            manager
-        }
-    }
 }
